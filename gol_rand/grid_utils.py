@@ -1,4 +1,4 @@
-from gof_rand.utils import tobits
+from gol_rand.utils import tobits
 import numpy as np
 from PIL import Image
 import imageio
@@ -45,12 +45,20 @@ def get_random_number_from_grid(grid, times=1):
         for x in range(0, len(grid)):
             for y in range(0, len(grid[x])):
                 bit_left = grid[max(0, x-1)][y]
+                bit_left_up = grid[max(0, x-1)][max(0, y-1)]
+
                 bit_right = grid[min(len(grid[x])-1, x+1)][y]
+                bit_right_up = grid[min(len(grid[x])-1, x+1)][max(0, y-1)]
+
                 bit_up = grid[x][max(0, y-1)]
+
                 bit_down = grid[x][min(len(grid[y])-1, y+1)]
+                bit_down_left = grid[max(0, x-1)][min(len(grid[y])-1, y+1)]
+                bit_down_right = grid[min(len(grid[x])-1, x+1)][min(len(grid[y])-1, y+1)]
+                
                 bit = grid[x][y]
 
-                counted = bit_left + bit_right + bit_up + bit_down
+                counted = bit_left + bit_left_up + bit_right + bit_right_up + bit_up + bit_down + bit_down_left + bit_down_right
 
                 if counted == 3:
                     grid[x][y] = 1

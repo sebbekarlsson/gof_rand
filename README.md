@@ -1,4 +1,4 @@
-# gof\_rand
+# gol\_rand
 > Random number generator using the rules of Game of Life
 
 ## Example

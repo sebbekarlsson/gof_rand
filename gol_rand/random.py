@@ -1,4 +1,4 @@
-from gof_rand.grid_utils import get_new_grid, populate_grid, get_random_number_from_grid
+from gol_rand.grid_utils import get_new_grid, populate_grid, get_random_number_from_grid
 import time
 
 

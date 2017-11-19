@@ -1,6 +1,6 @@
-from gof_rand.random import get_random_number
+from gol_rand.random import get_random_number
 
 
-number = get_random_number(grid_width=60, gof_intervals=100)
+number = get_random_number(grid_width=128, gof_intervals=60)
 
 print(number)
