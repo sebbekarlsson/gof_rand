@@ -1,4 +1,4 @@
-import StringIO
+from io import BytesIO
 
 
 def tobits(s):
@@ -13,7 +13,7 @@ def tobits(s):
 
 
 def images_to_gif(images):
-    tmp = StringIO.StringIO()
+    tmp = BytesIO()
 
     return images[0].save(
         tmp,
