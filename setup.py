@@ -1,20 +1,13 @@
-from distutils.core import setup
-import setuptools
+from setuptools import setup, find_packages
 
 
 setup(
     name='gol_rand',
-    version='',
+    version='1.0',
     install_requires=[
         'numpy',
         'pillow',
         'imageio'
     ],
-    packages=[
-        'gol_rand'
-    ],
-    entry_points={
-        "console_scripts": [
-        ]
-    }
+    packages=find_packages()
 )

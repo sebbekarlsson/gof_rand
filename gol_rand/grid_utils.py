@@ -1,7 +1,6 @@
 from gol_rand.utils import tobits
 import numpy as np
 from PIL import Image
-import imageio
 
 
 def get_new_grid(size=256):
@@ -15,11 +14,11 @@ def get_new_grid(size=256):
 
     return grid
 
+
 def populate_grid(grid, seed):
     seed_bits = tobits(seed)
 
     if len(seed_bits) < len(grid) * len(grid[0]):
-        moving_index = 0
         for i, bit in enumerate(seed_bits):
             seed_bits.append(seed_bits[i])
 
@@ -32,13 +31,12 @@ def populate_grid(grid, seed):
             grid[x][y] = seed_bits[seed_bits_index]
             seed_bits_index += 1
 
-
     return grid
 
-def get_random_number_from_grid(grid, times=1):
+
+def get_random_number_from_grid(grid, times=1, create_images=False):
     number = 0
     im = np.zeros((len(grid), len(grid), 3), dtype=np.uint8)
-    filenames = []
     images = []
 
     for i in range(times):
@@ -55,8 +53,6 @@ def get_random_number_from_grid(grid, times=1):
                 bit_down = grid[x][min(len(grid[y])-1, y+1)]
                 bit_down_left = grid[max(0, x-1)][min(len(grid[y])-1, y+1)]
                 bit_down_right = grid[min(len(grid[x])-1, x+1)][min(len(grid[y])-1, y+1)]
-                
-                bit = grid[x][y]
 
                 counted = bit_left + bit_left_up + bit_right + bit_right_up + bit_up + bit_down + bit_down_left + bit_down_right
 
@@ -65,24 +61,15 @@ def get_random_number_from_grid(grid, times=1):
 
                 if counted < 2 or counted > 3:
                     grid[x][y] = 0
-        
-        im = np.zeros((len(grid), len(grid), 3), dtype=np.uint8)        
+
+        im = np.zeros((len(grid), len(grid), 3), dtype=np.uint8)
         for x in range(0, len(grid)):
             for y in range(0, len(grid[x])):
                 im[x][y] = 255 if grid[x][y] >= 1 else 0
                 number += grid[x][y]
 
-        
-        img = Image.fromarray(im, 'RGB')
-        #img.show()
+        if create_images:
+            img = Image.fromarray(im, 'RGB')
+            images.append(img)
 
-        img.save('out/{}.jpg'.format(i))
-
-        filenames.append('out/{}.jpg'.format(i))
-
-
-    for filename in filenames:
-        images.append(imageio.imread(filename))
-        imageio.mimsave('out/movie.gif', images)
-            
-    return number
+    return number, images
